@@ -12,17 +12,17 @@ const api = new Api({
     data: null,
 })
 
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', '*')
+    next()
+})
+
 app.get('/api/regional', (req, res) => {
     api.getRegional(req.query.categoryId).then(results => res.json(results))
 })
 
 app.get('/api/municipal', (req, res) => {
     api.getMunicipal(req.query.categoryId).then(results => res.json(results))
-})
-
-app.use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', '*')
-    next()
 })
 
 app.listen(port, function () {
