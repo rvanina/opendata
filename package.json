@@ -6,8 +6,6 @@
   "author": "Qeep-Pro",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.4",
-    "flexboxgrid2": "^7.2.1",
-    "normalize.css": "^8.0.0"
+    "express": "^4.16.4"
   }
 }
