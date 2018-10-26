@@ -1,35 +1,29 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3').verbose()
 
-const Data = (config) => {
-    this.config = config;
+const Data = () => {
     this.db = new sqlite3.Database('./data/data.db', (err) => {
         if (err) {
-            console.error(err.message);
+            console.error(err.message)
         }
-        console.log('Connected to database.');
+        console.log('Connected to database.')
     });
+    createTable('federal')
+    createTable('regional')
 }
 
-Data.prototype.createTable = (table_name) => {
-    let sql = `CREATE TABLE ${name}(
+const createTable = (name) => {
+    let sql = `CREATE TABLE IF NOT EXISTS ${name} (
         id number PRIMARY KEY,
-        name text NOT NULL
-        )`;
+        name text NOT NULL,
+        parent_id number,
+        value number
+    )`;
     
-    db.all(sql, [], (err, rows) => {
+    this.db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
         }
-        console.log('Table was created.');
-    })
-}
-
-Data.prototype.close = () => {
-    db.close((err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Close database connection.');
+        console.log(`Table ${name} was created.`)
     })
 }
 
