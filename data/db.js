@@ -6,7 +6,7 @@ const Data = () => {
             console.error(err.message)
         }
         console.log('Connected to database.')
-    });
+    })
     createTable('federal')
     createTable('regional')
 }
@@ -17,14 +17,14 @@ const createTable = (name) => {
         name text NOT NULL,
         parent_id number,
         value number
-    )`;
+    )`
     
     this.db.all(sql, [], (err, rows) => {
         if (err) {
-            throw err;
+            throw err
         }
         console.log(`Table ${name} was created.`)
     })
 }
 
-module.exports = Data;
+module.exports = Data
