@@ -9,6 +9,7 @@
     "react": "^16.6.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.0",
+    "react-helmet": "^5.2.0",
     "react-scripts": "2.0.5",
     "styled-components": "^4.0.2"
   },
