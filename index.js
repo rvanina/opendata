@@ -1,16 +1,30 @@
-const express = require('express');
+const express = require('express')
 
-const app = express();
+const Api = require('./api')
+
+const app = express()
 
 const port = 80;
 
 app.use('/', express.static('front/build'))
 
-app.use(function (req, res, next) {
-    res.append('Access-Control-Allow-Origin', '*');
-    next();
-});
+const api = new Api({
+    data: null,
+})
+
+app.get('/api/regional', (req, res) => {
+    api.getRegional(req.query.categoryId).then(results => res.json(results))
+})
+
+app.get('/api/municipal', (req, res) => {
+    api.getMunicipal(req.query.categoryId).then(results => res.json(results))
+})
+
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', '*')
+    next()
+})
 
 app.listen(port, function () {
     console.log("Running on port: " + port)
-});
+})
