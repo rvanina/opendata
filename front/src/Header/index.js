@@ -17,7 +17,7 @@ export default function Header() {
     return (
         <Wrapper>
             <div className='container-fluid'>
-                <Title>Открыте данные|QEEP-Pro</Title>
+                <Title>Открытые данные</Title>
                 <Subtitle>Бюджет Томска</Subtitle>
             </div>
         </Wrapper>
