@@ -5,26 +5,27 @@ export const fetchRegionalData = (categoryId) => {
     if (categoryId) {
         return axios.get(`http://${HOSTNAME}:${PORT}/api/regional?categoryId=${categoryId}`)
         .then((response) => {
-            return JSON.parse(response)
+            return response.data
         })
     } else {
         return axios.get(`http://${HOSTNAME}:${PORT}/api/regional`)
+        .then((response) => {
+            return response.data
+        })
     }
 }
 
 export const fetchMunicipalData = (categoryId) => {
     if (categoryId) {
-        try { 
-            return axios.get(`http://${HOSTNAME}:${PORT}/api/municipal?categoryId=${categoryId}`)
-        } catch (error) {
-            console.log(error)
-        }
+        return axios.get(`http://${HOSTNAME}:${PORT}/api/municipal?categoryId=${categoryId}`)
+        .then((response) => {
+            return response.data
+        })
     } else {
-        try { 
-            return axios.get(`http://${HOSTNAME}:${PORT}/api/municipal`)
-        } catch (error) {
-            console.log(error)
-        }
+        return axios.get(`http://${HOSTNAME}:${PORT}/api/municipal`)
+        .then((response) => {
+            return response.data
+        })
     }
 }
 
