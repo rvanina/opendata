@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Doughnut} from 'react-chartjs-2';
 
-import { fetchRegionalData } from '../api/methods'
+import { fetchData } from '../api/methods'
 
 const Wrapper = styled.section`
     display: flex;
@@ -18,7 +18,7 @@ export default class Chart extends Component {
     }
 
     componentDidMount() {
-        fetchRegionalData().then(fetchedData => {
+        fetchData('regional').then(fetchedData => {
             let labels = fetchedData.map(item => item.name)
             let values = fetchedData.map(item => item.value)
             let datasets = [{data: values}]
