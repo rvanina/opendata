@@ -13,12 +13,13 @@ export default class Chart extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            type: this.props.type,
             data: {},
         }        
     }
 
     componentDidMount() {
-        fetchData('regional').then(fetchedData => {
+        fetchData(this.state.type).then(fetchedData => {
             let labels = fetchedData.map(item => item.name)
             let values = fetchedData.map(item => item.value)
             let datasets = [{data: values}]
@@ -26,6 +27,19 @@ export default class Chart extends Component {
             this.setState({data})
         }).catch(error => console.log(error))
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.type !== prevProps.type) {
+          fetchData(this.props.type).then(fetchedData => {
+            let labels = fetchedData.map(item => item.name)
+            let values = fetchedData.map(item => item.value)
+            let datasets = [{data: values}]
+            let data = { datasets, labels}
+            this.setState({data})
+        }).catch(error => console.log(error))
+        }
+      }
+
     render() {
         return (
             <Wrapper>
