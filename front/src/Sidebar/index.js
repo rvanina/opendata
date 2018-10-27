@@ -20,7 +20,11 @@ const Button = styled.button`
     line-height: 20px;
     font-size: 18px;
     letter-spacing: 0.75px;
-    text-transform: uppercase; 
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+        background: #42BA56;
+    } 
 `;
 
 const Numbers = styled.div`
