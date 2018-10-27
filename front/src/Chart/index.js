@@ -13,6 +13,11 @@ const Wrapper = styled.section`
     padding: 20px 20px 0 20px;
 `;
 
+const Header = styled.div`
+    display: flex;
+    width: 300px;
+`;
+
 const Title = styled.h2`
     font-family: Roboto;
     font-style: normal;
@@ -21,7 +26,22 @@ const Title = styled.h2`
     font-size: 14px;
     letter-spacing: 0.75px;
     text-transform: uppercase; 
-    width: 300px;
+`;
+
+const Button = styled.button`
+    display: inline-block;
+    padding: 2px;
+    margin: 2px;
+    background: none;
+    color: #42BA78;
+    border: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 18px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase; 
 `;
 
 const legendOpts = {
@@ -33,6 +53,12 @@ const opts = {
 }
 
 let chartTitle = '';
+
+let currId = null;
+
+let prevLevel = null;
+
+let prevLabel = null;
   
 
 export default class Chart extends Component {
@@ -41,16 +67,22 @@ export default class Chart extends Component {
         this.state = {
             type: this.props.type,
             data: {},
+            backBtnIsShown: false
         }
-        this.handleClick = this.handleClick.bind(this);        
+        this.handleElemClick = this.handleElemClick.bind(this);
+        this.handleBackBtnClick = this.handleBackBtnClick.bind(this);         
     }
 
-    handleClick(elem) {
+    handleElemClick(elem) {
         if (elem[0] !== undefined) {
             let id = elem[0]._model.label.charAt(0)
             let label = elem[0]._model.label.substring(1)
+            this.setState({backBtnIsShown: true})
+            prevLabel = chartTitle
+            prevLevel = currId
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
+                currId = id
                 let labels = fetchedData.map(item => item.id + item.name)
                 let values = fetchedData.map(item => item.value)
                 let backgroundColors = fetchedData.map(() => randomColor())
@@ -62,6 +94,21 @@ export default class Chart extends Component {
         } else {
             console.log('chart background')
         }
+    }
+
+    handleBackBtnClick() {
+        let id = prevLevel
+        let label = prevLabel
+        fetchData(this.state.type, id).then(fetchedData => {
+            chartTitle = label
+            let labels = fetchedData.map(item => item.id + item.name)
+            let values = fetchedData.map(item => item.value)
+            let backgroundColors = fetchedData.map(() => randomColor())
+            let ids = fetchedData.map(item => item.id)
+            let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
+            let data = { datasets, labels}
+            this.setState({data})
+        }).catch(error => console.log(error))
     }
 
     componentDidMount() {
@@ -102,13 +149,16 @@ export default class Chart extends Component {
     render() {
         return (
             <Wrapper>
-                <Title>{chartTitle}</Title>
+                <Header>
+                    {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
+                    <Title>{chartTitle}</Title>
+                </Header>
                 <Polar 
                     width={500} 
                     height={500} 
                     options={opts} 
                     data={this.state.data}
-                    getElementAtEvent={this.handleClick} 
+                    getElementAtEvent={this.handleElemClick} 
                     legend={legendOpts}
                 />
             </Wrapper>
