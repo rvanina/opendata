@@ -15,6 +15,14 @@ const Wrapper = styled.section`
 const legendOpts = {
     display: false,
 };
+
+let opts = {
+    maintainAspectRatio: false,
+    title: {
+        display: true,
+        text: 'Общий бюджет'
+    }
+}
   
 
 export default class Chart extends Component {
@@ -28,6 +36,11 @@ export default class Chart extends Component {
 
     componentDidMount() {
         fetchData(this.state.type).then(fetchedData => {
+            if (this.state.type === 'regional') {
+                opts.title.text = 'Общий бюджет Томской области'
+            } else {
+                opts.title.text = 'Общий бюджет Томска'
+            }
             let labels = fetchedData.map(item => item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
@@ -40,6 +53,11 @@ export default class Chart extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.type !== prevProps.type) {
           fetchData(this.props.type).then(fetchedData => {
+            if (this.props.type === 'regional') {
+                opts.title.text = 'Общий бюджет Томской области'
+            } else {
+                opts.title.text = 'Общий бюджет Томска'
+            }
             let labels = fetchedData.map(item => item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
@@ -56,7 +74,7 @@ export default class Chart extends Component {
                 <Polar 
                     width={500} 
                     height={500} 
-                    options={{ maintainAspectRatio: false }} 
+                    options={opts} 
                     data={this.state.data}
                     getElementAtEvent={elem => console.log(elem)} 
                     legend={legendOpts}
