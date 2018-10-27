@@ -157,6 +157,9 @@ export default class Chart extends Component {
             let data = { datasets, labels}
             this.setState({data})
         }).catch(error => console.log(error))
+        this.setState({backBtnIsShown: false})
+        prevLabel = []
+        prevLevel = []
         }
       }
 
