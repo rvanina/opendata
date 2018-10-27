@@ -156,11 +156,12 @@ export default class Chart extends Component {
             let datasets = [{data: values, backgroundColor: backgroundColors}]
             let data = { datasets, labels}
             this.setState({data})
+            let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+            this.props.updateData(valSum)
         }).catch(error => console.log(error))
         this.setState({backBtnIsShown: false})
         prevLabel = []
         prevLevel = []
-        this.props.updateData(10000)
         }
       }
 
