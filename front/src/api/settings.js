@@ -1,2 +1,2 @@
 export const HOSTNAME = window.location.hostname;
-export const PORT = '8008';
+export const PORT = '8888';

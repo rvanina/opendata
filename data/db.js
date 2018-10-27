@@ -28,23 +28,30 @@ class Data {
     }
 
     getData(parentId, type) {
-        let op = parentId ? '==' : 'is'
-        parentId = parentId == undefined ? null : parentId
-        let sql = `SELECT * FROM ${type} WHERE parent_id ${op} ${parentId}`
+        return new Promise((resolve, reject) => {
+            let op = parentId ? '==' : 'is'
+            parentId = parentId == undefined ? null : parentId
+            let sql = `SELECT * FROM ${type} WHERE parent_id ${op} ${parentId}`
 
-        this.db.all(sql, (err, rows) => {
-            if (err) {
-                throw err
-            }
-            return rows
+            this.db.all(sql, (err, rows) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(rows)
+            })
         })
     }
 
-    insertData(data, tableName) {
-        let sql = `INSERT INTO ${tableName}(id, name, parent_id, value)
-            VALUES(${data.id}, '${data.name}', ${data.parentId}, ${data.value})`
-
-        this.db.run(sql)
+    insertData(tableName, data) {
+        return new Promise((resolve, reject) => {
+            let sql = `INSERT INTO ${tableName}(name, parent_id, value)
+            VALUES('${data.name}', ${data.parent_id}, ${data.value})`
+            console.log(data)
+            this.db.run(sql, function(err) { if (err) reject(err) ; resolve(this.lastID) })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 }
 
