@@ -6,7 +6,7 @@ const Data = require('./data/db')
 
 const app = express()
 
-const port = 80
+const port = 8888
 
 app.use('/', express.static('front/build'))
 
@@ -14,7 +14,7 @@ const data = new Data()
 
 const api = new Api({
     data: null,
-    db: db,
+    db: data,
 })
 
 const csvLoader = new CsvLoader(data)
@@ -25,11 +25,11 @@ app.use((req, res, next) => {
 })
 
 app.get('/api/regional', (req, res) => {
-    res.json(api.getRegional(req.query.categoryId))
+    api.getRegional(req.query.categoryId).then((results) => res.json(results))
 })
 
 app.get('/api/municipal', (req, res) => {
-    res.json(api.getMunicipal(req.query.categoryId))
+    api.getMunicipal(req.query.categoryId).then((results) => res.json(results))
 })
 
 app.get('/parseData/:path', (req, res) => {
