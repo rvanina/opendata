@@ -7,7 +7,7 @@ const Data = () => {
         }
         console.log('Connected to database.')
     })
-    createTable('federal')
+    createTable('municipal')
     createTable('regional')
 }
 
