@@ -80,9 +80,13 @@ export default class Sidebar extends Component {
                         <span>{Math.round((val/REG_POP)*100/100)} тыс.руб</span>
                         ) : (
                         <span>{Math.round((val/TOMSK_POP)*100/100)} тыс.руб</span>
-                        )}
+                    )}
                     <br/> 
-                    В расчете на одного Томича
+                    {(this.state.currentType === 'regional') ? (
+                        'На одного жителя Томской области'
+                        ) : (
+                        'На одного Томича'
+                    )}
                 </Numbers>
             </Wrapper>
         )
