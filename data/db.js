@@ -29,6 +29,7 @@ class Data {
 
     getData(parentId, type) {
         let op = parentId ? '==' : 'is'
+        parentId = parentId == undefined ? null : parentId
         let sql = `SELECT * FROM ${type} WHERE parent_id ${op} ${parentId}`
 
         this.db.all(sql, (err, rows) => {
