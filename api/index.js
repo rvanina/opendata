@@ -77,19 +77,18 @@ const stubData = {
 
 class Api {
     constructor(config) {
-        const { data } = config
+        const { data, db } = config
 
-        this.data = stubData
+        this.data = db
     }
 
     getMunicipal(categoryId) {
-        return this.data.getMunicipal(categoryId)
+        return this.data.getData(categoryId, 'municipal')
     }
 
     getRegional(categoryId) {
-        return this.data.getRegional(categoryId)
+        return this.data.getData(categoryId, 'regional')
     }
-
 }
 
 module.exports = Api

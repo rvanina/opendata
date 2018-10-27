@@ -2,14 +2,19 @@ const express = require('express')
 
 const Api = require('./api')
 
+const Data = require('./data/db')
+
+const db = new Data()
+
 const app = express()
 
-const port = 80;
+const port = 8008;
 
 app.use('/', express.static('front/build'))
 
 const api = new Api({
     data: null,
+    db: db,
 })
 
 app.use((req, res, next) => {
@@ -18,11 +23,11 @@ app.use((req, res, next) => {
 })
 
 app.get('/api/regional', (req, res) => {
-    api.getRegional(req.query.categoryId).then(results => res.json(results))
+    res.json(api.getRegional(req.query.categoryId))
 })
 
 app.get('/api/municipal', (req, res) => {
-    api.getMunicipal(req.query.categoryId).then(results => res.json(results))
+    res.json(api.getMunicipal(req.query.categoryId))
 })
 
 app.listen(port, function () {
