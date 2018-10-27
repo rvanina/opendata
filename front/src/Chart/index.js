@@ -56,9 +56,9 @@ let chartTitle = '';
 
 let currId = null;
 
-let prevLevel = null;
+let prevLevel = [];
 
-let prevLabel = null;
+let prevLabel = [];
   
 
 export default class Chart extends Component {
@@ -78,8 +78,9 @@ export default class Chart extends Component {
             let id = elem[0]._model.label.charAt(0)
             let label = elem[0]._model.label.substring(1)
             this.setState({backBtnIsShown: true})
-            prevLabel = chartTitle
-            prevLevel = currId
+            prevLabel.push(chartTitle)
+            prevLevel.push(currId)
+            console.log(prevLabel)
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
                 currId = id
@@ -97,14 +98,16 @@ export default class Chart extends Component {
     }
 
     handleBackBtnClick() {
-        let id = prevLevel
-        let label = prevLabel
+        prevLevel.pop()
+        prevLabel.pop()
+        console.log(prevLabel)
+        let last = prevLevel.length
+        let lastLabel = prevLabel.length
+        let id = prevLevel[last-1]
+        let label = prevLabel[lastLabel-1]
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
             currId = id
-            if (!currId) {
-                this.setState({backBtnIsShown: false})
-            }
             let labels = fetchedData.map(item => item.id + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
