@@ -2,22 +2,13 @@ const sqlite3 = require('sqlite3').verbose()
 
 
 class Data {
-    constructor(config) {
-        const { munData, regData } = config
+    constructor() {
         this.db = new sqlite3.Database('./data/data.db', (err) => {
             if (err) {
                 console.error(err.message)
             }
             console.log('Connected to database.')
         })
-        this.createTable('municipal')
-        this.createTable('regional')
-        munData ? munData.forEach(data => {
-            this.insertData(data, 'municipal')
-        }) : 0
-        regData ? regData.forEach((data => {
-            this.insertData(data, 'regional')
-        })) : 0
     }
 
     createTable(name) {
@@ -37,11 +28,10 @@ class Data {
     }
 
     getData(parentId, type) {
-        let sql = `SELECT * FROM ${type}
-            WHERE parent_id = ${parentId}
-        `
+        let op = parentId ? '==' : 'is'
+        let sql = `SELECT * FROM ${type} WHERE parent_id ${op} ${parentId}`
 
-        db.all(sql, (err, rows) => {
+        this.db.all(sql, (err, rows) => {
             if (err) {
                 throw err
             }
@@ -50,24 +40,11 @@ class Data {
     }
 
     insertData(data, tableName) {
-        let sql = `INSERT INTO ${tableName}(id number, name text, parent_id number,
-            value number)
-            VALUES(${data.id}, ${data.name}, ${data.parentId}, ${data.value})`
+        let sql = `INSERT INTO ${tableName}(id, name, parent_id, value)
+            VALUES(${data.id}, '${data.name}', ${data.parentId}, ${data.value})`
 
-        this.db.each(sql, (err) => {
-            if (err) {
-                throw err
-            }
-        })
+        this.db.run(sql)
     }
-
-    query(sql, parameters) {
-        return this.db.all(sql, parameters, (err, row) => {
-            if (err) {
-                throw err
-            }
-            return row
-    })}
 }
 
 module.exports = Data
