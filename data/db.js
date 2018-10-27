@@ -7,7 +7,7 @@ const Data = () => {
         }
         console.log('Connected to database.')
     })
-    createTable('federal')
+    createTable('municipal')
     createTable('regional')
 }
 
@@ -27,10 +27,23 @@ const createTable = (name) => {
     })
 }
 
+Data.prototype.getData = (parent_id, type) => {
+    let sql = `SELECT * FROM ${type}
+        WHERE parent_id = ${parent_id}
+    `
+
+    db.all(sql, (err, rows) => {
+        if (err) {
+            throw err
+        }
+        return rows
+    })
+}
+
 const insertData = (data, tableName) => {
-    let sql = `INSERT INTO ${tableName}(name text, parent_id number,
+    let sql = `INSERT INTO ${tableName}(id number, name text, parent_id number,
         value number)
-        VALUES(${data.name}, ${data.parent_id}, ${data.value})`
+        VALUES(${data.id}, ${data.name}, ${data.parent_id}, ${data.value})`
 
     this.db.run(sql)
 }
