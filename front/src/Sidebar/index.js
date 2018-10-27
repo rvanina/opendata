@@ -64,6 +64,9 @@ export default class Sidebar extends Component {
     }
 
     render() {
+
+        let val = this.props.data
+
         return (
             <Wrapper>
                 <Button onClick={this.handleChangeType}>
@@ -75,7 +78,7 @@ export default class Sidebar extends Component {
                 </Button>
                 <br/>
                 <Numbers>
-                    <span>{Math.round((FAKE_VAL/TOMSK_POP)*100/100)} тыс.руб</span>
+                    <span>{Math.round((val/TOMSK_POP)*100/100)} тыс.руб</span>
                     <br/> 
                     В расчете на одного Томича
                 </Numbers>

@@ -160,6 +160,7 @@ export default class Chart extends Component {
         this.setState({backBtnIsShown: false})
         prevLabel = []
         prevLevel = []
+        this.props.updateData(10000)
         }
       }
 
