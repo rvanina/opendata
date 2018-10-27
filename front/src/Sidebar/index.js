@@ -76,7 +76,7 @@ export default class Sidebar extends Component {
                         'Томская область'
                      ) : (
                         'Томск'
-                     )}
+                    )}
                 </Button>
                 <br/>
                 <Numbers>
