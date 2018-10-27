@@ -101,6 +101,10 @@ export default class Chart extends Component {
         let label = prevLabel
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
+            currId = id
+            if (!currId) {
+                this.setState({backBtnIsShown: false})
+            }
             let labels = fetchedData.map(item => item.id + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
