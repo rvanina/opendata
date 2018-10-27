@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "sqlite3": "^4.0.3"
+    "sqlite3": "^4.0.3",
+    "sync": "^0.2.5"
   }
 }
