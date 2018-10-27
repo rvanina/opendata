@@ -44,6 +44,10 @@ const Button = styled.button`
     text-transform: uppercase; 
 `;
 
+const ChartWrapper = styled.div`
+    cursor: pointer;
+`;
+
 const legendOpts = {
     display: false,
 };
@@ -172,14 +176,16 @@ export default class Chart extends Component {
                     {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
                     <Title>{chartTitle + '(тыс.руб)'}</Title>
                 </Header>
-                <Polar 
-                    width={500} 
-                    height={500} 
-                    options={opts} 
-                    data={this.state.data}
-                    getElementAtEvent={this.handleElemClick} 
-                    legend={legendOpts}
-                />
+                <ChartWrapper>
+                    <Polar 
+                        width={500} 
+                        height={500} 
+                        options={opts} 
+                        data={this.state.data}
+                        getElementAtEvent={this.handleElemClick} 
+                        legend={legendOpts}
+                    />
+                </ChartWrapper>
             </Wrapper>
         )
     }
