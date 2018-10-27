@@ -47,8 +47,6 @@ const TOMSK_POP = 595.2;
 
 const REG_POP = 1078.3;
 
-const FAKE_VAL = 60000;
-
 export default class Sidebar extends Component {
     state = {
         currentType: 'regional',
@@ -78,7 +76,11 @@ export default class Sidebar extends Component {
                 </Button>
                 <br/>
                 <Numbers>
-                    <span>{Math.round((val/TOMSK_POP)*100/100)} тыс.руб</span>
+                    {(this.state.currentType === 'regional') ? (
+                        <span>{Math.round((val/REG_POP)*100/100)} тыс.руб</span>
+                        ) : (
+                        <span>{Math.round((val/TOMSK_POP)*100/100)} тыс.руб</span>
+                        )}
                     <br/> 
                     В расчете на одного Томича
                 </Numbers>
