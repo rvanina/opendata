@@ -14,11 +14,16 @@ const ContentWrapper = styled.main`
 
 class App extends Component {
   state = {
-    type: 'regional'
+    type: 'regional',
+    value: undefined
   }
 
   setDataType = (dataType) => {
     this.setState({ type: dataType })
+  }
+
+  updateData = (data) => {
+    this.setState({value: data})
   }
   render() {
     return (
@@ -28,8 +33,8 @@ class App extends Component {
         </Helmet>
         <Header/>
         <ContentWrapper>
-          <Sidebar setDataType={this.setDataType} />
-          <Chart type={this.state.type}/>
+          <Sidebar setDataType={this.setDataType} data={this.state.value} />
+          <Chart type={this.state.type} updateData={this.updateData}/>
         </ContentWrapper>
       </React.Fragment>
     );
