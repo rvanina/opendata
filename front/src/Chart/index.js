@@ -83,7 +83,9 @@ export default class Chart extends Component {
             console.log(prevLabel)
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
+                prevLabel.push(chartTitle)
                 currId = id
+                prevLevel.push(currId)
                 let labels = fetchedData.map(item => item.id + item.name)
                 let values = fetchedData.map(item => item.value)
                 let backgroundColors = fetchedData.map(() => randomColor())
@@ -116,6 +118,9 @@ export default class Chart extends Component {
             let data = { datasets, labels}
             this.setState({data})
         }).catch(error => console.log(error))
+        if (prevLabel.length === 1) {
+            this.setState({backBtnIsShown: false})
+        }
     }
 
     componentDidMount() {
@@ -140,8 +145,10 @@ export default class Chart extends Component {
           fetchData(this.props.type).then(fetchedData => {
             if (this.props.type === 'regional') {
                 chartTitle = 'Общий бюджет Томской области'
+                prevLabel.push(chartTitle)
             } else {
                 chartTitle = 'Общий бюджет Томска'
+                prevLabel.push(chartTitle)
             }
             let labels = fetchedData.map(item => item.name)
             let values = fetchedData.map(item => item.value)
