@@ -84,7 +84,6 @@ export default class Chart extends Component {
             this.setState({backBtnIsShown: true})
             prevLabel.push(chartTitle)
             prevLevel.push(currId)
-            console.log(prevLabel)
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
                 prevLabel.push(chartTitle)
@@ -98,15 +97,12 @@ export default class Chart extends Component {
                 let data = { datasets, labels}
                 this.setState({data})
             }).catch(error => console.log(error))
-        } else {
-            console.log('chart background')
         }
     }
 
     handleBackBtnClick() {
         prevLevel.pop()
         prevLabel.pop()
-        console.log(prevLabel)
         let last = prevLevel.length
         let lastLabel = prevLabel.length
         let id = prevLevel[last-1]
