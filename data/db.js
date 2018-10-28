@@ -13,7 +13,7 @@ class Data {
 
     createTable(name) {
         let sql = `CREATE TABLE IF NOT EXISTS ${name} (
-            id number PRIMARY KEY,
+            id integer PRIMARY KEY AUTOINCREMENT,
             name text NOT NULL,
             parent_id number,
             value number

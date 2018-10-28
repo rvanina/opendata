@@ -83,11 +83,11 @@ class Api {
     }
 
     getMunicipal(categoryId) {
-        return this.data.getData(categoryId, 'municipal')
+        return this.data.getData(categoryId, 'regional')
     }
 
     getRegional(categoryId) {
-        return this.data.getData(categoryId, 'regional')
+        return this.data.getData(categoryId, 'municipal')
     }
 }
 
