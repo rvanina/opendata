@@ -8,8 +8,13 @@ import Sidebar from './Sidebar';
 
 const ContentWrapper = styled.main`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
+  overflow: hidden;
+  @media (max-width: 767px) {
+    flex-flow: column nowrap;
+    align-items: center;
+  }
 `;
 
 class App extends Component {

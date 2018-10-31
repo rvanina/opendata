@@ -26,6 +26,10 @@ const Button = styled.button`
     &:hover {
         background: black;
     } 
+    @media (max-width: 767px) {
+        max-width: 300px;
+        min-width: 0;
+    }
 `;
 
 const Numbers = styled.div`

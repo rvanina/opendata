@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import MediaQuery from 'react-responsive';
 
 import { Doughnut } from 'react-chartjs-2';
 
@@ -16,6 +17,9 @@ const Wrapper = styled.section`
 const Header = styled.div`
     display: flex;
     width: 450px;
+    @media (max-width: 500px) {
+        width: 300px;
+    }
 `;
 
 const Title = styled.h2`
@@ -190,14 +194,36 @@ export default class Chart extends Component {
                     <Title>{chartTitle + ' (тыс.руб)'}</Title>
                 </Header>
                 <ChartWrapper>
-                    <Doughnut 
-                        width={500} 
-                        height={500} 
-                        options={opts} 
-                        data={this.state.data}
-                        getElementAtEvent={this.handleElemClick} 
-                        legend={legendOpts}
-                    />
+                    <MediaQuery minDeviceWidth={1024}>
+                        <Doughnut 
+                            width={500} 
+                            height={500} 
+                            options={opts} 
+                            data={this.state.data}
+                            getElementAtEvent={this.handleElemClick} 
+                            legend={legendOpts}
+                        />
+                    </MediaQuery>
+                    <MediaQuery maxDeviceWidth={1023}>
+                        <Doughnut 
+                            width={300} 
+                            height={300} 
+                            options={opts} 
+                            data={this.state.data}
+                            getElementAtEvent={this.handleElemClick} 
+                            legend={legendOpts}
+                        />
+                    </MediaQuery>
+                    <MediaQuery maxDeviceWidth={350}>
+                        <Doughnut 
+                            width={250} 
+                            height={250} 
+                            options={opts} 
+                            data={this.state.data}
+                            getElementAtEvent={this.handleElemClick} 
+                            legend={legendOpts}
+                        />
+                    </MediaQuery>
                 </ChartWrapper>
             </Wrapper>
         )
