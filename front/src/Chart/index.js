@@ -75,6 +75,7 @@ let prevLabel = [];
 const colorScheme = {
     luminosity: 'light',
 }
+
 export default class Chart extends Component {
     constructor(props) {
         super(props)
@@ -108,6 +109,8 @@ export default class Chart extends Component {
                 this.setState({data})
                 let valSum = values.reduce((acc, i) => {return acc+i}, 0)
                 this.props.updateData(valSum)
+                prevLabel.push(chartTitle)
+                prevLevel.push(currId)
             }).catch(error => console.log(error))
         }
     }
@@ -119,7 +122,6 @@ export default class Chart extends Component {
         let lastLabel = prevLabel.length
         let id = prevLevel[last-1]
         let label = prevLabel[lastLabel-1]
-        console.log(prevLevel)
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
             currId = id
@@ -133,7 +135,7 @@ export default class Chart extends Component {
             let valSum = values.reduce((acc, i) => {return acc+i}, 0)
             this.props.updateData(valSum)
         }).catch(error => console.log(error))
-        if (prevLabel.length === 1) {
+        if (prevLevel.length === 1) {
             this.setState({backBtnIsShown: false})
             prevLabel = []
             prevLevel = []
@@ -165,10 +167,8 @@ export default class Chart extends Component {
           fetchData(this.props.type).then(fetchedData => {
             if (this.props.type === 'regional') {
                 chartTitle = 'Общий бюджет Томской области'
-                prevLabel.push(chartTitle)
             } else {
                 chartTitle = 'Общий бюджет Томска'
-                prevLabel.push(chartTitle)
             }
             currId = null
             let labels = fetchedData.map(item => item.id + ':' + item.name)
