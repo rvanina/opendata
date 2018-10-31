@@ -6,7 +6,6 @@ const Wrapper = styled.aside`
     padding: 8px;
     flex-flow: column wrap;
     border: 8px solid #42BA78;
-    margin-top: 12px;
 `;
 
 const Button = styled.button`

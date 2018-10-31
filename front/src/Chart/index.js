@@ -10,7 +10,7 @@ var randomColor = require('randomcolor');
 const Wrapper = styled.section`
     display: flex;
     flex-flow: column nowrap;
-    padding: 20px 20px 0 20px;
+    padding: 0 20px 0 20px;
 `;
 
 const Header = styled.div`
