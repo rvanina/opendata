@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.aside`
     display: flex;
@@ -36,7 +36,7 @@ const Button = styled.button`
     }
 `;
 
-const Numbers = styled.div`
+const InfoBlock = styled.div`
     display: flex;
     flex-flow: column nowrap;
     padding: 8px 8px 16px 8px;
@@ -54,6 +54,9 @@ const Numbers = styled.div`
     &:first-child {
         padding-top: 16px;
     }
+    ${props => props.noBottomLine && css`
+        border-bottom: none;
+    `}
 `;
 
 const Cost = styled.span`
@@ -95,11 +98,11 @@ export default class Sidebar extends Component {
                     )}
                 </Button>
                 <br/>
-                <Numbers>
+                <InfoBlock>
                     <Cost>{Math.round(val)} тыс.руб</Cost>
                     Всего
-                </Numbers>
-                <Numbers>
+                </InfoBlock>
+                <InfoBlock>
                     {(this.state.currentType === 'regional') ? (
                         <Cost>{Math.round((val/REG_POP)*100/100)} тыс.руб</Cost>
                         ) : (
@@ -110,7 +113,11 @@ export default class Sidebar extends Component {
                         ) : (
                         'На одного Томича'
                     )}
-                </Numbers>
+                </InfoBlock>
+                <InfoBlock noBottomLine>
+                    Проект "Бюджет Томска" - представляет простую и удобную
+                    визуализацию статей расходов бюджета Томска и Томской области
+                </InfoBlock>
             </Wrapper>
         )
     }
