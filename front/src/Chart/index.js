@@ -96,6 +96,8 @@ export default class Chart extends Component {
                 let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
                 let data = { datasets, labels}
                 this.setState({data})
+                let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+                this.props.updateData(valSum)
             }).catch(error => console.log(error))
         }
     }
@@ -118,6 +120,8 @@ export default class Chart extends Component {
             let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
             let data = { datasets, labels}
             this.setState({data})
+            let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+            this.props.updateData(valSum)
         }).catch(error => console.log(error))
         if (prevLabel.length === 1) {
             this.setState({backBtnIsShown: false})
