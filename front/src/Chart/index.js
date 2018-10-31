@@ -82,6 +82,7 @@ let prevLabel = [];
   
 const colorScheme = {
     luminosity: 'light',
+    hue: 'blue'
 }
 
 export default class Chart extends Component {
