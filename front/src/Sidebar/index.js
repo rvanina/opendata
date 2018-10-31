@@ -23,6 +23,7 @@ const Button = styled.button`
     letter-spacing: 0.75px;
     text-transform: uppercase;
     cursor: pointer;
+    outline: 2px solid #42BA78; 
     &:hover {
         background: black;
     } 
