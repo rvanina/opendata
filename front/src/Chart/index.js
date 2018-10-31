@@ -16,7 +16,9 @@ const Wrapper = styled.section`
 
 const Header = styled.div`
     display: flex;
+    align-items: center;
     width: 450px;
+    min-height: 100px;
     @media (max-width: 500px) {
         width: 300px;
     }
@@ -26,8 +28,8 @@ const Title = styled.h2`
     font-family: Roboto;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px;
-    font-size: 14px;
+    line-height: 24px;
+    font-size: 18px;
     letter-spacing: 0.75px;
     text-transform: uppercase; 
 `;
