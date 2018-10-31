@@ -181,7 +181,7 @@ export default class Chart extends Component {
             <Wrapper>
                 <Header>
                     {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
-                    <Title>{chartTitle + '(тыс.руб)'}</Title>
+                    <Title>{chartTitle + ' (тыс.руб)'}</Title>
                 </Header>
                 <ChartWrapper>
                     <Polar 
