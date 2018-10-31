@@ -51,6 +51,9 @@ const Button = styled.button`
     &:hover {
         color: black;
     } 
+    &:focus {
+        color: black;
+    }
 `;
 
 const ChartWrapper = styled.div`
