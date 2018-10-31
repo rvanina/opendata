@@ -58,7 +58,7 @@ const opts = {
 
 let chartTitle = '';
 
-let currId = null;
+let currId;
 
 let prevLevel = [];
 
@@ -79,17 +79,17 @@ export default class Chart extends Component {
 
     handleElemClick(elem) {
         if (elem[0] !== undefined) {
-            let id = elem[0]._model.label.charAt(0)
-            let label = elem[0]._model.label.substring(1)
+            let str = elem[0]._model.label
+            let i = str.indexOf(':')
+            let id = str.substring(0,i)
+            let label = str.substring(0)
             this.setState({backBtnIsShown: true})
             prevLabel.push(chartTitle)
             prevLevel.push(currId)
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
-                prevLabel.push(chartTitle)
                 currId = id
-                prevLevel.push(currId)
-                let labels = fetchedData.map(item => item.id + item.name)
+                let labels = fetchedData.map(item => item.id + ':' + item.name)
                 let values = fetchedData.map(item => item.value)
                 let backgroundColors = fetchedData.map(() => randomColor())
                 let ids = fetchedData.map(item => item.id)
@@ -107,10 +107,11 @@ export default class Chart extends Component {
         let lastLabel = prevLabel.length
         let id = prevLevel[last-1]
         let label = prevLabel[lastLabel-1]
+        console.log(prevLevel)
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
             currId = id
-            let labels = fetchedData.map(item => item.id + item.name)
+            let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
             let ids = fetchedData.map(item => item.id)
@@ -120,6 +121,9 @@ export default class Chart extends Component {
         }).catch(error => console.log(error))
         if (prevLabel.length === 1) {
             this.setState({backBtnIsShown: false})
+            prevLabel = []
+            prevLevel = []
+            console.log(prevLevel)
         }
     }
 
@@ -130,7 +134,8 @@ export default class Chart extends Component {
             } else {
                 chartTitle = 'Общий бюджет Томска'
             }
-            let labels = fetchedData.map(item => item.id + item.name)
+            currId = null
+            let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
             let ids = fetchedData.map(item => item.id)
@@ -150,7 +155,8 @@ export default class Chart extends Component {
                 chartTitle = 'Общий бюджет Томска'
                 prevLabel.push(chartTitle)
             }
-            let labels = fetchedData.map(item => item.name)
+            currId = null
+            let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor())
             let datasets = [{data: values, backgroundColor: backgroundColors}]
