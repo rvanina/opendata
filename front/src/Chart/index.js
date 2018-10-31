@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { Polar, Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 import { fetchData } from '../api/methods'
 
@@ -15,7 +15,7 @@ const Wrapper = styled.section`
 
 const Header = styled.div`
     display: flex;
-    width: 300px;
+    width: 450px;
 `;
 
 const Title = styled.h2`
@@ -190,7 +190,7 @@ export default class Chart extends Component {
                     <Title>{chartTitle + ' (тыс.руб)'}</Title>
                 </Header>
                 <ChartWrapper>
-                    <Polar 
+                    <Doughnut 
                         width={500} 
                         height={500} 
                         options={opts} 
