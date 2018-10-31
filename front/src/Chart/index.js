@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { Polar } from 'react-chartjs-2';
+import { Polar, Doughnut } from 'react-chartjs-2';
 
 import { fetchData } from '../api/methods'
 
@@ -38,8 +38,8 @@ const Button = styled.button`
     font-family: Roboto;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px;
-    font-size: 18px;
+    line-height: 26px;
+    font-size: 24px;
     letter-spacing: 0.75px;
     text-transform: uppercase; 
 `;
@@ -54,6 +54,10 @@ const legendOpts = {
 
 const opts = {
     maintainAspectRatio: false,
+    tooltips: {
+        xPadding: 16,
+        yPadding: 8,
+    }
 }
 
 let chartTitle = '';
@@ -64,7 +68,9 @@ let prevLevel = [];
 
 let prevLabel = [];
   
-
+const colorScheme = {
+    luminosity: 'light',
+}
 export default class Chart extends Component {
     constructor(props) {
         super(props)
@@ -91,7 +97,7 @@ export default class Chart extends Component {
                 currId = id
                 let labels = fetchedData.map(item => item.id + ':' + item.name)
                 let values = fetchedData.map(item => item.value)
-                let backgroundColors = fetchedData.map(() => randomColor())
+                let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
                 let ids = fetchedData.map(item => item.id)
                 let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
                 let data = { datasets, labels}
@@ -115,7 +121,7 @@ export default class Chart extends Component {
             currId = id
             let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
-            let backgroundColors = fetchedData.map(() => randomColor())
+            let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
             let ids = fetchedData.map(item => item.id)
             let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
             let data = { datasets, labels}
@@ -140,7 +146,7 @@ export default class Chart extends Component {
             currId = null
             let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
-            let backgroundColors = fetchedData.map(() => randomColor())
+            let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
             let ids = fetchedData.map(item => item.id)
             let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
             let data = { datasets, labels}
@@ -163,7 +169,7 @@ export default class Chart extends Component {
             currId = null
             let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
-            let backgroundColors = fetchedData.map(() => randomColor())
+            let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
             let datasets = [{data: values, backgroundColor: backgroundColors}]
             let data = { datasets, labels}
             this.setState({data})
