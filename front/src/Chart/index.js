@@ -216,8 +216,8 @@ export default class Chart extends Component {
                     </MediaQuery>
                     <MediaQuery maxDeviceWidth={350}>
                         <Doughnut 
-                            width={250} 
-                            height={250} 
+                            width={150} 
+                            height={150} 
                             options={opts} 
                             data={this.state.data}
                             getElementAtEvent={this.handleElemClick} 
