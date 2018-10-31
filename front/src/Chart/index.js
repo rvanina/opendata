@@ -82,7 +82,7 @@ export default class Chart extends Component {
             let str = elem[0]._model.label
             let i = str.indexOf(':')
             let id = str.substring(0,i)
-            let label = str.substring(0)
+            let label = str.substring(i+1)
             this.setState({backBtnIsShown: true})
             prevLabel.push(chartTitle)
             prevLevel.push(currId)
