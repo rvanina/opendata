@@ -46,6 +46,11 @@ const Button = styled.button`
     font-size: 24px;
     letter-spacing: 0.75px;
     text-transform: uppercase; 
+    outline: none;
+    cursor: pointer;
+    &:hover {
+        color: black;
+    } 
 `;
 
 const ChartWrapper = styled.div`
