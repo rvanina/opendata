@@ -6,7 +6,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 import { fetchData } from '../api/methods'
 
-var randomColor = require('randomcolor');
+let randomColor = require('randomcolor');
 
 const Wrapper = styled.section`
     display: flex;
@@ -69,22 +69,78 @@ const legendOpts = {
 const opts = {
     maintainAspectRatio: false,
     tooltips: {
-        yPadding: 10,
-        xPadding: 10,
-        caretSize: 8,
-        backgroundColor: '#ffffff',
-        titleFontColor: '#000000',
-        bodyFontColor: '#000000',
-        borderColor: '#000000',
-        borderWidth: 2,
-        callbacks: {
-            label: (item, data) => {
-                let label = data.labels[item.index] || '';
-                let i = label.indexOf(':')
-                let id = label.substring(0,i+1)
-                label = id + '\n' + label.substring(i+1)
-                return label
+        // Disable the on-canvas tooltip
+        enabled: false,
+
+        custom: function(tooltipModel) {
+            // Tooltip Element
+            let tooltipEl = document.getElementById('chartjs-tooltip');
+
+            // Create element on first render
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = 'chartjs-tooltip';
+                tooltipEl.innerHTML = "<table></table>";
+                document.body.appendChild(tooltipEl);
             }
+
+            // Hide if no tooltip
+            if (tooltipModel.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+            }
+
+            // Set caret Position
+            tooltipEl.classList.remove('above', 'below', 'no-transform');
+            if (tooltipModel.yAlign) {
+                tooltipEl.classList.add(tooltipModel.yAlign);
+            } else {
+                tooltipEl.classList.add('no-transform');
+            }
+
+            function getBody(bodyItem) {
+                return bodyItem.lines;
+            }
+
+            // Set Text
+            if (tooltipModel.body) {
+                let titleLines = tooltipModel.title || [];
+                let bodyLines = tooltipModel.body.map(getBody);
+
+                let innerHtml = '<thead>';
+
+                titleLines.forEach(function(title) {
+                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                });
+                innerHtml += '</thead><tbody>';
+
+                bodyLines.forEach(function(body, i) {
+                    let colors = tooltipModel.labelColors[i];
+                    let style = 'background:' + colors.backgroundColor;
+                    style += '; border-color:' + colors.borderColor;
+                    style += '; border-width: 2px';
+                    let span = '<span style="' + style + '"></span>';
+                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                });
+                innerHtml += '</tbody>';
+
+                let tableRoot = tooltipEl.querySelector('table');
+                tableRoot.innerHTML = innerHtml;
+            }
+
+            // `this` will be the overall tooltip
+            let position = this._chart.canvas.getBoundingClientRect();
+
+            // Display, position, and set styles for font
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.position = 'absolute';
+            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+            tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+            tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+            tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+            tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+            tooltipEl.style.pointerEvents = 'none';
         }
     },
 }
