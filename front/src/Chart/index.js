@@ -69,9 +69,24 @@ const legendOpts = {
 const opts = {
     maintainAspectRatio: false,
     tooltips: {
-        xPadding: 16,
-        yPadding: 8,
-    }
+        yPadding: 10,
+        xPadding: 10,
+        caretSize: 8,
+        backgroundColor: '#ffffff',
+        titleFontColor: '#000000',
+        bodyFontColor: '#000000',
+        borderColor: '#000000',
+        borderWidth: 2,
+        callbacks: {
+            label: (item, data) => {
+                let label = data.labels[item.index] || '';
+                let i = label.indexOf(':')
+                let id = label.substring(0,i+1)
+                label = id + '\n' + label.substring(i+1)
+                return label
+            }
+        }
+    },
 }
 
 let chartTitle = '';
