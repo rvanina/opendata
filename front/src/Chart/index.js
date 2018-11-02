@@ -12,20 +12,29 @@ const Wrapper = styled.section`
     display: flex;
     flex-flow: column nowrap;
     padding: 0 20px 0 20px;
+    align-items: center;
 `;
 
 const History = styled.div`
     display: flex;
     flex-flow: row wrap;
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 12px;
+    line-height: 14px;
     color: #ffffff;
+    width: 800px;
 `;
 
 const HistoryItem = styled.div`
     display: inline-block;
-    width: 100px;
-    background: lightblue;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #42BA78;
+    padding: 0 4px 0 0;
+    &:nth-child(2n) {
+        background #000000;
+    }
 `;
 
 const Header = styled.div`
