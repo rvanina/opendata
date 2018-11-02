@@ -167,8 +167,8 @@ const opts = {
                 });
                 innerHtml += '</div>';
 
-                let tableRoot = tooltipEl.querySelector('section');
-                tableRoot.innerHTML = innerHtml;
+                let tooltipRoot = tooltipEl.querySelector('section');
+                tooltipRoot.innerHTML = innerHtml;
             }
 
             let position = this._chart.canvas.getBoundingClientRect();
