@@ -219,8 +219,8 @@ export default class Chart extends Component {
                 this.setState({data})
                 let valSum = values.reduce((acc, i) => {return acc+i}, 0)
                 this.props.updateData(valSum)
-                // prevLabel.push(chartTitle)
-                // prevLevel.push(currId)
+                prevLabel.push(chartTitle)
+                prevLevel.push(currId)
             }).catch(error => console.log(error))
         }
     }
