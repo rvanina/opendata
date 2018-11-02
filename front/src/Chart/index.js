@@ -14,6 +14,20 @@ const Wrapper = styled.section`
     padding: 0 20px 0 20px;
 `;
 
+const History = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 10px;
+    line-height: 12px;
+    color: #ffffff;
+`;
+
+const HistoryItem = styled.div`
+    display: inline-block;
+    width: 100px;
+    background: lightblue;
+`;
+
 const Header = styled.div`
     display: flex;
     align-items: center;
@@ -193,8 +207,8 @@ export default class Chart extends Component {
                 this.setState({data})
                 let valSum = values.reduce((acc, i) => {return acc+i}, 0)
                 this.props.updateData(valSum)
-                prevLabel.push(chartTitle)
-                prevLevel.push(currId)
+                // prevLabel.push(chartTitle)
+                // prevLevel.push(currId)
             }).catch(error => console.log(error))
         }
     }
@@ -273,6 +287,11 @@ export default class Chart extends Component {
     render() {
         return (
             <Wrapper>
+                <History>
+                    {prevLabel.map(item => (
+                        <HistoryItem>{item}</HistoryItem>
+                    ))}
+                </History>
                 <Header>
                     {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
                     <Title>{chartTitle + ' (тыс.руб)'}</Title>
