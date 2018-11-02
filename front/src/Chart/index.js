@@ -69,28 +69,23 @@ const legendOpts = {
 const opts = {
     maintainAspectRatio: false,
     tooltips: {
-        // Disable the on-canvas tooltip
         enabled: false,
 
         custom: function(tooltipModel) {
-            // Tooltip Element
             let tooltipEl = document.getElementById('chartjs-tooltip');
 
-            // Create element on first render
             if (!tooltipEl) {
                 tooltipEl = document.createElement('div');
                 tooltipEl.id = 'chartjs-tooltip';
-                tooltipEl.innerHTML = "<table></table>";
+                tooltipEl.innerHTML = "<section></section>";
                 document.body.appendChild(tooltipEl);
             }
 
-            // Hide if no tooltip
             if (tooltipModel.opacity === 0) {
                 tooltipEl.style.opacity = 0;
                 return;
             }
 
-            // Set caret Position
             tooltipEl.classList.remove('above', 'below', 'no-transform');
             if (tooltipModel.yAlign) {
                 tooltipEl.classList.add(tooltipModel.yAlign);
@@ -102,43 +97,48 @@ const opts = {
                 return bodyItem.lines;
             }
 
-            // Set Text
             if (tooltipModel.body) {
                 let titleLines = tooltipModel.title || [];
                 let bodyLines = tooltipModel.body.map(getBody);
 
-                let innerHtml = '<thead>';
+                let innerHtml = '<header>';
 
                 titleLines.forEach(function(title) {
-                    innerHtml += '<tr><th>' + title + '</th></tr>';
+                    innerHtml += '<span>' + title + '</span>';
                 });
-                innerHtml += '</thead><tbody>';
+                let style = 'background: #ffffff;';
+                style += 'border: 1px solid #000000;';
+                style += 'border-radius: 4px;';
+                style += 'display: flex;';
+                style += 'flex-flow: column nowrap;';
+                style += 'padding: 4px;';
+                style += 'font-size: 14px;';
+                style += 'line-height: 16px;';
+                innerHtml += '</header><div style="' + style + '" >';
 
                 bodyLines.forEach(function(body, i) {
-                    let colors = tooltipModel.labelColors[i];
-                    let style = 'background:' + colors.backgroundColor;
-                    style += '; border-color:' + colors.borderColor;
-                    style += '; border-width: 2px';
-                    let span = '<span style="' + style + '"></span>';
-                    innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                    body = String(body)
+                    let delim1 = body.indexOf(':');
+                    let id = body.substring(0, delim1);
+                    let delim2 = body.lastIndexOf(':');
+                    let main = body.substring(delim1 + 1, delim2);
+                    let value = body.substring(delim2 + 1);
+                    innerHtml += '<div style="padding: 0 0 4px 0;"><span>id:</span>' + id + '</div>';
+                    innerHtml += '<div style="padding: 0 0 4px 0;">' + main + '</div>';
+                    innerHtml += '<div>' + value + ' тыс.руб </div>';
                 });
-                innerHtml += '</tbody>';
+                innerHtml += '</div>';
 
-                let tableRoot = tooltipEl.querySelector('table');
+                let tableRoot = tooltipEl.querySelector('section');
                 tableRoot.innerHTML = innerHtml;
             }
 
-            // `this` will be the overall tooltip
             let position = this._chart.canvas.getBoundingClientRect();
 
-            // Display, position, and set styles for font
             tooltipEl.style.opacity = 1;
             tooltipEl.style.position = 'absolute';
             tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
             tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
-            tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
-            tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
-            tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
             tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
             tooltipEl.style.pointerEvents = 'none';
         }
