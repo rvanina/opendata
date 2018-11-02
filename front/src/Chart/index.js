@@ -22,6 +22,12 @@ const History = styled.div`
     line-height: 14px;
     color: #ffffff;
     width: 800px;
+    @media (max-width: 1024px) {
+        width: 500px;
+    }
+    @media (max-width: 768px) {
+        width: 450px;
+    }
 `;
 
 const HistoryItem = styled.div`
@@ -32,8 +38,12 @@ const HistoryItem = styled.div`
     text-overflow: ellipsis;
     background: #42BA78;
     padding: 0 4px 0 0;
+    cursor: pointer;
     &:nth-child(2n) {
         background #000000;
+    }
+    &:hover {
+        opacity: 0.6;
     }
 `;
 
@@ -195,7 +205,8 @@ export default class Chart extends Component {
             backBtnIsShown: false
         }
         this.handleElemClick = this.handleElemClick.bind(this);
-        this.handleBackBtnClick = this.handleBackBtnClick.bind(this);         
+        this.handleBackBtnClick = this.handleBackBtnClick.bind(this);
+        this.handleHistoryElemClick = this.handleHistoryElemClick.bind(this);         
     }
 
     handleElemClick(elem) {
@@ -226,6 +237,37 @@ export default class Chart extends Component {
     handleBackBtnClick() {
         prevLevel.pop()
         prevLabel.pop()
+        let last = prevLevel.length
+        let lastLabel = prevLabel.length
+        let id = prevLevel[last-1]
+        let label = prevLabel[lastLabel-1]
+        fetchData(this.state.type, id).then(fetchedData => {
+            chartTitle = label
+            currId = id
+            let labels = fetchedData.map(item => item.id + ':' + item.name)
+            let values = fetchedData.map(item => item.value)
+            let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
+            let ids = fetchedData.map(item => item.id)
+            let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
+            let data = { datasets, labels}
+            this.setState({data})
+            let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+            this.props.updateData(valSum)
+        }).catch(error => console.log(error))
+        if (prevLevel.length === 1) {
+            this.setState({backBtnIsShown: false})
+        }
+    }
+
+    handleHistoryElemClick(idOfElem) {
+        let currElem = prevLevel.indexOf(idOfElem)
+        let lastElem = prevLevel.length - 1
+        let diff = lastElem - currElem
+        while (diff > 0) {
+            prevLevel.pop()
+            prevLabel.pop()
+            diff = diff - 1
+        }
         let last = prevLevel.length
         let lastLabel = prevLabel.length
         let id = prevLevel[last-1]
@@ -300,8 +342,8 @@ export default class Chart extends Component {
         return (
             <Wrapper>
                 <History>
-                    {prevLabel.map(item => (
-                        <HistoryItem>{item}</HistoryItem>
+                    {prevLabel.map((item, i) => (
+                        <HistoryItem onClick={() => (this.handleHistoryElemClick(prevLevel[i]))}>{item}</HistoryItem>
                     ))}
                 </History>
                 <Header>
