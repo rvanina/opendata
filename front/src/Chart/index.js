@@ -106,14 +106,16 @@ const opts = {
                 titleLines.forEach(function(title) {
                     innerHtml += '<span>' + title + '</span>';
                 });
-                let style = 'background: #ffffff;';
+                let style = 'background: #000000;';
                 style += 'border: 1px solid #000000;';
                 style += 'border-radius: 4px;';
                 style += 'display: flex;';
                 style += 'flex-flow: column nowrap;';
+                style += 'opacity: 0.85;';
                 style += 'padding: 4px;';
                 style += 'font-size: 14px;';
                 style += 'line-height: 16px;';
+                style += 'color: #ffffff';
                 innerHtml += '</header><div style="' + style + '" >';
 
                 bodyLines.forEach(function(body, i) {
@@ -123,8 +125,8 @@ const opts = {
                     let delim2 = body.lastIndexOf(':');
                     let main = body.substring(delim1 + 1, delim2);
                     let value = body.substring(delim2 + 1);
-                    innerHtml += '<div style="padding: 0 0 4px 0;"><span>id:</span>' + id + '</div>';
-                    innerHtml += '<div style="padding: 0 0 4px 0;">' + main + '</div>';
+                    innerHtml += '<div style="padding: 0 0 8px 0;"><span>id: </span>' + id + '</div>';
+                    innerHtml += '<div style="padding: 0 0 8px 0;">' + main + '</div>';
                     innerHtml += '<div>' + value + ' тыс.руб </div>';
                 });
                 innerHtml += '</div>';
