@@ -299,11 +299,11 @@ export default class Chart extends Component {
     render() {
         return (
             <Wrapper>
-                <History>
+                {/* <History>
                     {prevLabel.map(item => (
                         <HistoryItem>{item}</HistoryItem>
                     ))}
-                </History>
+                </History> */}
                 <Header>
                     {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
                     <Title>{chartTitle + ' (тыс.руб)'}</Title>
