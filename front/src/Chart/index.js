@@ -237,10 +237,10 @@ export default class Chart extends Component {
     handleBackBtnClick() {
         prevLevel.pop()
         prevLabel.pop()
-        let last = prevLevel.length
-        let lastLabel = prevLabel.length
-        let id = prevLevel[last-1]
-        let label = prevLabel[lastLabel-1]
+        let last = prevLevel.length-1
+        let lastLabel = prevLabel.length-1
+        let id = prevLevel[last]
+        let label = prevLabel[lastLabel]
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
             currId = id
@@ -268,10 +268,10 @@ export default class Chart extends Component {
             prevLabel.pop()
             diff = diff - 1
         }
-        let last = prevLevel.length
-        let lastLabel = prevLabel.length
-        let id = prevLevel[last-1]
-        let label = prevLabel[lastLabel-1]
+        let last = prevLevel.length-1
+        let lastLabel = prevLabel.length-1
+        let id = prevLevel[last]
+        let label = prevLabel[lastLabel]
         fetchData(this.state.type, id).then(fetchedData => {
             chartTitle = label
             currId = id
