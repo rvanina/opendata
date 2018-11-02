@@ -136,6 +136,7 @@ const opts = {
                 style += 'flex-flow: column nowrap;';
                 style += 'opacity: 0.85;';
                 style += 'padding: 4px;';
+                style += 'font-family: Roboto;';
                 style += 'font-size: 14px;';
                 style += 'line-height: 16px;';
                 style += 'color: #ffffff';
@@ -148,9 +149,9 @@ const opts = {
                     let delim2 = body.lastIndexOf(':');
                     let main = body.substring(delim1 + 1, delim2);
                     let value = body.substring(delim2 + 1);
-                    innerHtml += '<div style="padding: 0 0 8px 0;"><span>id: </span>' + id + '</div>';
+                    innerHtml += '<div style="padding: 0 0 8px 0;"><span style="letter-spacing: 1.15px; font-weight: 500;">id: </span>' + id + '</div>';
                     innerHtml += '<div style="padding: 0 0 8px 0;">' + main + '</div>';
-                    innerHtml += '<div>' + value + ' тыс.руб </div>';
+                    innerHtml += '<div style="letter-spacing: 1.15px; font-weight: 500;">' + value + ' тыс.руб </div>';
                 });
                 innerHtml += '</div>';
 
