@@ -26,7 +26,7 @@ const History = styled.div`
 
 const HistoryItem = styled.div`
     display: inline-block;
-    max-width: 200px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
