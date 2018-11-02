@@ -205,11 +205,11 @@ export default class Chart extends Component {
             let id = str.substring(0,i)
             let label = str.substring(i+1)
             this.setState({backBtnIsShown: true})
-            prevLabel.push(chartTitle)
-            prevLevel.push(currId)
             fetchData(this.state.type, id).then(fetchedData => {
                 chartTitle = label
                 currId = id
+                prevLabel.push(chartTitle)
+                prevLevel.push(currId)
                 let labels = fetchedData.map(item => item.id + ':' + item.name)
                 let values = fetchedData.map(item => item.value)
                 let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
@@ -219,8 +219,6 @@ export default class Chart extends Component {
                 this.setState({data})
                 let valSum = values.reduce((acc, i) => {return acc+i}, 0)
                 this.props.updateData(valSum)
-                prevLabel.push(chartTitle)
-                prevLevel.push(currId)
             }).catch(error => console.log(error))
         }
     }
@@ -247,8 +245,6 @@ export default class Chart extends Component {
         }).catch(error => console.log(error))
         if (prevLevel.length === 1) {
             this.setState({backBtnIsShown: false})
-            prevLabel = []
-            prevLevel = []
         }
     }
 
@@ -260,6 +256,8 @@ export default class Chart extends Component {
                 chartTitle = 'Общий бюджет Томска'
             }
             currId = null
+            prevLabel.push(chartTitle)
+            prevLevel.push(currId)
             let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
@@ -281,6 +279,8 @@ export default class Chart extends Component {
                 chartTitle = 'Общий бюджет Томска'
             }
             currId = null
+            prevLabel.push(chartTitle)
+            prevLevel.push(currId)
             let labels = fetchedData.map(item => item.id + ':' + item.name)
             let values = fetchedData.map(item => item.value)
             let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
@@ -291,19 +291,17 @@ export default class Chart extends Component {
             this.props.updateData(valSum)
         }).catch(error => console.log(error))
         this.setState({backBtnIsShown: false})
-        prevLabel = []
-        prevLevel = []
         }
       }
 
     render() {
         return (
             <Wrapper>
-                {/* <History>
+                <History>
                     {prevLabel.map(item => (
                         <HistoryItem>{item}</HistoryItem>
                     ))}
-                </History> */}
+                </History>
                 <Header>
                     {this.state.backBtnIsShown && <Button onClick={this.handleBackBtnClick}>◀</Button>}
                     <Title>{chartTitle + ' (тыс.руб)'}</Title>
