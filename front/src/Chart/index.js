@@ -279,6 +279,8 @@ export default class Chart extends Component {
                 chartTitle = 'Общий бюджет Томска'
             }
             currId = null
+            prevLabel = []
+            prevLevel = []
             prevLabel.push(chartTitle)
             prevLevel.push(currId)
             let labels = fetchedData.map(item => item.id + ':' + item.name)
