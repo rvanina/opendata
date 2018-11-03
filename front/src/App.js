@@ -12,7 +12,7 @@ const ContentWrapper = styled.main`
   justify-content: space-between;
   overflow: hidden;
   @media (max-width: 767px) {
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
     align-items: center;
   }
 `;
