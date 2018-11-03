@@ -175,8 +175,18 @@ const opts = {
 
             tooltipEl.style.opacity = 1;
             tooltipEl.style.position = 'absolute';
+            if (tooltipModel.caretX > 260) {
+                tooltipModel.caretX -= 260
+            }
+            if (tooltipModel.caretY > 320) {
+                tooltipModel.caretY -= 160
+            }
             tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
             tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+            console.log('x')
+            console.log(tooltipModel.caretX)
+            console.log('y')
+            console.log(tooltipModel.caretY)
             tooltipEl.style.pointerEvents = 'none';
         }
     },
