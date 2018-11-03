@@ -217,42 +217,21 @@ export default class Chart extends Component {
             let label = str.substring(i+1)
             this.setState({backBtnIsShown: true})
             fetchData(this.state.type, id).then(fetchedData => {
-                chartTitle = label
-                currId = id
-                prevLabel.push(chartTitle)
-                prevLevel.push(currId)
-                let labels = fetchedData.map(item => item.id + ':' + item.name)
                 let values = fetchedData.map(item => item.value)
-                let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
-                let ids = fetchedData.map(item => item.id)
-                let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
-                let data = { datasets, labels}
-                // this.setState({data})
                 if (values.length) {
+                    let labels = fetchedData.map(item => item.id + ':' + item.name)
+                    let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
+                    let ids = fetchedData.map(item => item.id)
+                    let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
+                    let data = { datasets, labels}
                     this.setState({data})
-                } else {
-                    prevLevel.pop()
-                    prevLabel.pop()
-                    let last = prevLevel.length-1
-                    let lastLabel = prevLabel.length-1
-                    let id = prevLevel[last]
-                    let label = prevLabel[lastLabel]
-                    fetchData(this.state.type, id).then(fetchedData => {
-                        chartTitle = label
-                        currId = id
-                        let labels = fetchedData.map(item => item.id + ':' + item.name)
-                        let values = fetchedData.map(item => item.value)
-                        let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
-                        let ids = fetchedData.map(item => item.id)
-                        let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
-                        let data = { datasets, labels}
-                        this.setState({data})
-                        let valSum = values.reduce((acc, i) => {return acc+i}, 0)
-                        this.props.updateData(valSum)
-                    }).catch(error => console.log(error))
-                }
-                let valSum = values.reduce((acc, i) => {return acc+i}, 0)
-                this.props.updateData(valSum)
+                    chartTitle = label
+                    currId = id
+                    prevLabel.push(chartTitle)
+                    prevLevel.push(currId)
+                    let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+                    this.props.updateData(valSum)
+                }    
             }).catch(error => console.log(error))
         }
     }
