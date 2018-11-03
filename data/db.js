@@ -31,7 +31,7 @@ class Data {
     getData(parentId, type) {
         return new Promise((resolve, reject) => {
             let op = parentId ? '==' : 'is'
-            parentId = parentId == undefined ? null : parentId
+            parentId = parentId === undefined ? null : parentId
             let sql = `SELECT * FROM ${type} WHERE parent_id ${op} ${parentId}`
 
             this.db.all(sql, (err, rows) => {
@@ -45,8 +45,8 @@ class Data {
 
     insertData(tableName, data) {
         return new Promise((resolve, reject) => {
-            let sql = `INSERT INTO ${tableName}(name, parent_id, value)
-            VALUES('${data.name}', ${data.parent_id}, ${data.value})`
+            let sql = `INSERT INTO ${tableName}(name, parent_id, value, line_number)
+            VALUES('${data.name}', ${data.parent_id}, ${data.value}, ${data.line_number})`
             console.log(data)
             this.db.run(sql, function(err) { if (err) reject(err) ; resolve(this.lastID) })
         })
