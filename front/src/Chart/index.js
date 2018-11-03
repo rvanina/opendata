@@ -227,7 +227,30 @@ export default class Chart extends Component {
                 let ids = fetchedData.map(item => item.id)
                 let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
                 let data = { datasets, labels}
-                this.setState({data})
+                // this.setState({data})
+                if (values.length) {
+                    this.setState({data})
+                } else {
+                    prevLevel.pop()
+                    prevLabel.pop()
+                    let last = prevLevel.length-1
+                    let lastLabel = prevLabel.length-1
+                    let id = prevLevel[last]
+                    let label = prevLabel[lastLabel]
+                    fetchData(this.state.type, id).then(fetchedData => {
+                        chartTitle = label
+                        currId = id
+                        let labels = fetchedData.map(item => item.id + ':' + item.name)
+                        let values = fetchedData.map(item => item.value)
+                        let backgroundColors = fetchedData.map(() => randomColor(colorScheme))
+                        let ids = fetchedData.map(item => item.id)
+                        let datasets = [{data: values, backgroundColor: backgroundColors, id: ids}]
+                        let data = { datasets, labels}
+                        this.setState({data})
+                        let valSum = values.reduce((acc, i) => {return acc+i}, 0)
+                        this.props.updateData(valSum)
+                    }).catch(error => console.log(error))
+                }
                 let valSum = values.reduce((acc, i) => {return acc+i}, 0)
                 this.props.updateData(valSum)
             }).catch(error => console.log(error))
@@ -343,7 +366,7 @@ export default class Chart extends Component {
             <Wrapper>
                 <History>
                     {prevLabel.map((item, i) => (
-                        <HistoryItem onClick={() => (this.handleHistoryElemClick(prevLevel[i]))}>{item}</HistoryItem>
+                        <HistoryItem key={i} onClick={() => (this.handleHistoryElemClick(prevLevel[i]))}>{item}</HistoryItem>
                     ))}
                 </History>
                 <Header>
