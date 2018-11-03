@@ -6,6 +6,7 @@
   "author": "Qeep-Pro",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "sqlite3": "^4.0.3",
     "sync": "^0.2.5"

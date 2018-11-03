@@ -6,7 +6,7 @@ const Data = require('./data/db')
 
 const app = express()
 
-const port = 8888
+const port = process.env.DB_PORT || 8888
 
 app.use('/', express.static('front/build'))
 
