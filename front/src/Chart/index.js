@@ -371,7 +371,7 @@ export default class Chart extends Component {
                             legend={legendOpts}
                         />
                     </MediaQuery>
-                    <MediaQuery maxDeviceWidth={350}>
+                    {/* <MediaQuery maxDeviceWidth={576}>
                         <Doughnut 
                             width={150} 
                             height={150} 
@@ -380,7 +380,7 @@ export default class Chart extends Component {
                             getElementAtEvent={this.handleElemClick} 
                             legend={legendOpts}
                         />
-                    </MediaQuery>
+                    </MediaQuery> */}
                 </ChartWrapper>
             </Wrapper>
         )
