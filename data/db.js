@@ -15,8 +15,9 @@ class Data {
         let sql = `CREATE TABLE IF NOT EXISTS ${name} (
             id integer PRIMARY KEY AUTOINCREMENT,
             name text NOT NULL,
-            parent_id number,
-            value number
+            parent_id integer,
+            value number,
+            line_number integer
         )`
         
         this.db.run(sql, [], (err, rows) => {

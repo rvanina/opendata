@@ -42,7 +42,11 @@ class CsvLoader {
 
             let parents = [ { level: 1, parentId: Promise.resolve(null) } ]
 
+            let lineNumber = 0;
+
             rl.on('line', (line) => {
+
+                lineNumber++;
 
                 const lineData = parseLine(line)
 
@@ -69,9 +73,14 @@ class CsvLoader {
                 }
 
                 const promise = parentId.then(id => {
-                    const dbQuery = self.db.insertData(tableName, { name, parent_id: id, value })
+                    const dbQuery = self.db.insertData(tableName, {
+                        name,
+                        parent_id: id,
+                        value,
+                        line_number: lineNumber
+                    })
 
-                    data += JSON.stringify({ name, parent_id: id, value, lineLevel }) + '\n'
+                    data += JSON.stringify({ name, parent_id: id, value, lineLevel, lineNumber }) + '\n'
 
                     parents.push({
                         level: lineLevel,
