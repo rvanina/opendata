@@ -16,8 +16,7 @@ class Data {
             id integer PRIMARY KEY AUTOINCREMENT,
             name text NOT NULL,
             parent_id integer,
-            value number,
-            line_number integer
+            value number
         )`
         
         this.db.run(sql, [], (err, rows) => {
@@ -45,8 +44,8 @@ class Data {
 
     insertData(tableName, data) {
         return new Promise((resolve, reject) => {
-            let sql = `INSERT INTO ${tableName}(name, parent_id, value, line_number)
-            VALUES('${data.name}', ${data.parent_id}, ${data.value}, ${data.line_number})`
+            let sql = `INSERT INTO ${tableName}(name, parent_id, value)
+            VALUES('${data.name}', ${data.parent_id}, ${data.value})`
             console.log(data)
             this.db.run(sql, function(err) { if (err) reject(err) ; resolve(this.lastID) })
         })

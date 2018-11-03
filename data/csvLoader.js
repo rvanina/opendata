@@ -8,7 +8,7 @@ const parseLine = (line) => {
         const [ rawName, rawLineCategoryId, rawValue ] = parts
 
         const name = rawName.replace(/"+/g, '"').replace(/^"/, '')
-        const value = parseFloat(rawValue.replace(/\s+/, '').replace(',', '.'))
+        const value = parseFloat(rawValue.replace(/\s+/g, '').replace(',', '.'))
         const categoryParts = rawLineCategoryId.split('')
         const lineCategoryId = (categoryParts[0] === '0' ? categoryParts.splice(1) : categoryParts).join('')
 
@@ -47,10 +47,11 @@ class CsvLoader {
             rl.on('line', (line) => {
 
                 lineNumber++;
-
+                
                 const lineData = parseLine(line)
 
                 if (!lineData) {
+                    console.error(lineNumber)
                     return
                 }
 
@@ -77,10 +78,9 @@ class CsvLoader {
                         name,
                         parent_id: id,
                         value,
-                        line_number: lineNumber
                     })
 
-                    data += JSON.stringify({ name, parent_id: id, value, lineLevel, lineNumber }) + '\n'
+                    data += JSON.stringify({ name, parent_id: id, value, lineLevel}) + '\n'
 
                     parents.push({
                         level: lineLevel,
