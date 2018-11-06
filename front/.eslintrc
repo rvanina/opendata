@@ -5,6 +5,8 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-did-update-set-state": false,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "import/no-named-as-default": false,
+    "import/no-named-as-default-member": false
   }
 }
