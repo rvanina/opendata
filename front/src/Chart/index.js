@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 
@@ -431,3 +432,8 @@ export default class Chart extends Component {
     );
   }
 }
+
+Chart.propTypes = {
+  type: PropTypes.string.isRequired,
+  updateData: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const Wrapper = styled.aside`
@@ -119,3 +120,8 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+Sidebar.propTypes = {
+  data: PropTypes.number.isRequired,
+  setDataType: PropTypes.func.isRequired,
+};
