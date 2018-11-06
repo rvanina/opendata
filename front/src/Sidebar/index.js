@@ -54,10 +54,7 @@ const InfoBlock = styled.div`
   &:first-child {
     padding-top: 16px;
   }
-  ${props =>
-    props.noBottomLine && css`
-      border-bottom: none;
-    `};
+  ${props => props.noBottomLine && css`border-bottom: none;`};
 `;
 
 const Cost = styled.span`
