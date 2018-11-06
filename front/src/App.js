@@ -30,6 +30,7 @@ class App extends Component {
   updateData = (data) => {
     this.setState({ value: data });
   }
+
   render() {
     const { value, type } = this.state;
     return (
@@ -37,7 +38,7 @@ class App extends Component {
         <Helmet>
           <title>Бюджет Томска | Открытые данные 2018</title>
         </Helmet>
-        <Header/>
+        <Header />
         <div className="container">
           <ContentWrapper>
             <Sidebar setDataType={this.setDataType} data={value} />
