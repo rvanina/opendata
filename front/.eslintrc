@@ -8,5 +8,8 @@
     "no-underscore-dangle": 0,
     "import/no-named-as-default": false,
     "import/no-named-as-default-member": false
+  },
+  "env": {
+    "browser": true
   }
 }
