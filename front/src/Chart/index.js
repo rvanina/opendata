@@ -105,7 +105,7 @@ const opts = {
   tooltips: {
     enabled: false,
 
-    custom: function (tooltipModel) {
+    custom(tooltipModel) {
       let tooltipEl = document.getElementById('chartjs-tooltip');
 
       if (!tooltipEl) {
