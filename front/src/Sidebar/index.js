@@ -78,20 +78,25 @@ export default class Sidebar extends Component {
   };
 
   handleChangeType = () => {
-    this.props.setDataType(this.state.nextType);
+    const { setDataType } = this.props;
+    const { nextType, currentType } = this.state;
+    setDataType(nextType);
     this.setState({
-      currentType: this.state.nextType,
-      nextType: this.state.currentType
+      currentType: nextType,
+      nextType: currentType,
     });
   };
 
   render() {
-    let val = this.props.data;
+    const { data } = this.props;
+    const { currentType } = this.state;
+
+    const val = data;
 
     return (
       <Wrapper>
         <Button onClick={this.handleChangeType}>
-          {this.state.currentType === 'regional' ? 'Томская область' : 'Томск'}
+          {currentType === 'regional' ? 'Томская область' : 'Томск'}
         </Button>
         <br />
         <InfoBlock>
@@ -99,12 +104,12 @@ export default class Sidebar extends Component {
           Всего
         </InfoBlock>
         <InfoBlock>
-          {this.state.currentType === 'regional' ? (
+          {currentType === 'regional' ? (
             <Cost>{Math.round(((val / REG_POP) * 100) / 100)} тыс.руб</Cost>
           ) : (
             <Cost>{Math.round(((val / TOMSK_POP) * 100) / 100)} тыс.руб</Cost>
           )}
-          {this.state.currentType === 'regional'
+          {currentType === 'regional'
             ? 'На одного жителя Томской области'
             : 'На одного Томича'}
         </InfoBlock>
