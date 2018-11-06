@@ -98,21 +98,30 @@ export default class Sidebar extends Component {
         </Button>
         <br />
         <InfoBlock>
-          <Cost>{Math.round(val)} тыс.руб</Cost>
+          <Cost>
+            {Math.round(val)}
+            тыс.руб
+          </Cost>
           Всего
         </InfoBlock>
         <InfoBlock>
           {currentType === 'regional' ? (
-            <Cost>{Math.round(((val / REG_POP) * 100) / 100)} тыс.руб</Cost>
+            <Cost>
+              {Math.round(((val / REG_POP) * 100) / 100)}
+              тыс.руб
+            </Cost>
           ) : (
-            <Cost>{Math.round(((val / TOMSK_POP) * 100) / 100)} тыс.руб</Cost>
+            <Cost>
+              {Math.round(((val / TOMSK_POP) * 100) / 100)}
+              тыс.руб
+            </Cost>
           )}
           {currentType === 'regional'
             ? 'На одного жителя Томской области'
             : 'На одного Томича'}
         </InfoBlock>
         <InfoBlock noBottomLine>
-          Проект "Бюджет Томска" - простая и удобная визуализация статей
+          Проект ‘Бюджет Томска‘ - простая и удобная визуализация статей
           расходов бюджета Томска и Томской области. Использованы данные из
           открытых источников.
         </InfoBlock>
