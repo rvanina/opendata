@@ -228,6 +228,7 @@ export default class Chart extends Component {
 
   componentDidMount() {
     const { type } = this.state;
+    const { updateData } = this.props;
     fetchData(type)
       .then((fetchedData) => {
         if (type === 'regional') {
@@ -248,16 +249,17 @@ export default class Chart extends Component {
         const data = { datasets, labels };
         this.setState({ data });
         const valSum = values.reduce((acc, i) => (acc + i), 0);
-        this.props.updateData(valSum);
+        updateData(valSum);
       })
       .catch(error => console.log(error));
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.type !== prevProps.type) {
-      fetchData(this.props.type)
+    const { type, updateData } = this.props;
+    if (type !== prevProps.type) {
+      fetchData(type)
         .then((fetchedData) => {
-          if (this.props.type === 'regional') {
+          if (type === 'regional') {
             chartTitle = 'Общий бюджет Томской области';
           } else {
             chartTitle = 'Общий бюджет Томска';
@@ -274,7 +276,7 @@ export default class Chart extends Component {
           const data = { datasets, labels };
           this.setState({ data });
           const valSum = values.reduce((acc, i) => acc + i, 0);
-          this.props.updateData(valSum);
+          updateData(valSum);
         })
         .catch(error => console.log(error));
       this.setState({ backBtnIsShown: false });
@@ -282,13 +284,15 @@ export default class Chart extends Component {
   }
 
   handleElemClick(elem) {
+    const { type } = this.state;
+    const { updateData } = this.props;
     if (elem[0] !== undefined) {
       const str = elem[0]._model.label;
       const i = str.indexOf(':');
       const id = str.substring(0, i);
       const label = str.substring(i + 1);
       this.setState({ backBtnIsShown: true });
-      fetchData(this.state.type, id)
+      fetchData(type, id)
         .then((fetchedData) => {
           const values = fetchedData.map(item => item.value);
           if (values.length) {
@@ -305,7 +309,7 @@ export default class Chart extends Component {
             prevLabel.push(chartTitle);
             prevLevel.push(currId);
             const valSum = values.reduce((acc, count) => acc + count, 0);
-            this.props.updateData(valSum);
+            updateData(valSum);
           }
         })
         .catch(error => console.log(error));
@@ -313,13 +317,15 @@ export default class Chart extends Component {
   }
 
   handleBackBtnClick() {
+    const { type } = this.state;
+    const { updateData } = this.props;
     prevLevel.pop();
     prevLabel.pop();
     const last = prevLevel.length - 1;
     const lastLabel = prevLabel.length - 1;
     const id = prevLevel[last];
     const label = prevLabel[lastLabel];
-    fetchData(this.state.type, id)
+    fetchData(type, id)
       .then((fetchedData) => {
         chartTitle = label;
         currId = id;
@@ -333,7 +339,7 @@ export default class Chart extends Component {
         const data = { datasets, labels };
         this.setState({ data });
         const valSum = values.reduce((acc, i) => acc + i, 0);
-        this.props.updateData(valSum);
+        updateData(valSum);
       })
       .catch(error => console.log(error));
     if (prevLevel.length === 1) {
@@ -342,6 +348,8 @@ export default class Chart extends Component {
   }
 
   handleHistoryElemClick(idOfElem) {
+    const { type } = this.state;
+    const { updateData } = this.props;
     const currElem = prevLevel.indexOf(idOfElem);
     const lastElem = prevLevel.length - 1;
     let diff = lastElem - currElem;
@@ -354,7 +362,7 @@ export default class Chart extends Component {
     const lastLabel = prevLabel.length - 1;
     const id = prevLevel[last];
     const label = prevLabel[lastLabel];
-    fetchData(this.state.type, id)
+    fetchData(type, id)
       .then((fetchedData) => {
         chartTitle = label;
         currId = id;
@@ -368,7 +376,7 @@ export default class Chart extends Component {
         const data = { datasets, labels };
         this.setState({ data });
         const valSum = values.reduce((acc, i) => acc + i, 0);
-        this.props.updateData(valSum);
+        updateData(valSum);
       })
       .catch(error => console.log(error));
     if (prevLevel.length === 1) {
@@ -378,6 +386,7 @@ export default class Chart extends Component {
 
 
   render() {
+    const { backBtnIsShown, data } = this.state;
     return (
       <Wrapper>
         <History>
@@ -391,7 +400,7 @@ export default class Chart extends Component {
           ))}
         </History>
         <Header>
-          {this.state.backBtnIsShown && (
+          {backBtnIsShown && (
             <Button onClick={this.handleBackBtnClick}>◀</Button>
           )}
           <Title>{`${chartTitle} (тыс.руб)`}</Title>
@@ -402,7 +411,7 @@ export default class Chart extends Component {
               width={500}
               height={500}
               options={opts}
-              data={this.state.data}
+              data={data}
               getElementAtEvent={this.handleElemClick}
               legend={legendOpts}
             />
@@ -412,7 +421,7 @@ export default class Chart extends Component {
               width={300}
               height={300}
               options={opts}
-              data={this.state.data}
+              data={data}
               getElementAtEvent={this.handleElemClick}
               legend={legendOpts}
             />

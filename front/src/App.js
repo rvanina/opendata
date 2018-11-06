@@ -31,6 +31,7 @@ class App extends Component {
     this.setState({ value: data });
   }
   render() {
+    const { value, type } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -39,8 +40,8 @@ class App extends Component {
         <Header/>
         <div className="container">
           <ContentWrapper>
-            <Sidebar setDataType={this.setDataType} data={this.state.value} />
-            <Chart type={this.state.type} updateData={this.updateData} />
+            <Sidebar setDataType={this.setDataType} data={value} />
+            <Chart type={type} updateData={this.updateData} />
           </ContentWrapper>
         </div>
       </React.Fragment>

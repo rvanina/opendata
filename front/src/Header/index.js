@@ -33,7 +33,7 @@ const Subtitle = styled.h2`
   text-transform: uppercase;
 `;
 
-export default function Header() {
+function Header() {
   return (
     <Wrapper>
       <div className='container-fluid'>
@@ -43,3 +43,5 @@ export default function Header() {
     </Wrapper>
   );
 }
+
+export default Header;
