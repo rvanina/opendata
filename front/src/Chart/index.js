@@ -5,7 +5,7 @@ import MediaQuery from 'react-responsive';
 
 import { Doughnut } from 'react-chartjs-2';
 
-import { fetchData } from '../api/methods';
+import fetchData from '../api/methods';
 
 const randomColor = require('randomcolor');
 
