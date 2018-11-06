@@ -99,21 +99,18 @@ export default class Sidebar extends Component {
         <br />
         <InfoBlock>
           <Cost>
-            {Math.round(val)}
-            тыс.руб
+            {`${Math.round(val)} тыс.руб`}
           </Cost>
           Всего
         </InfoBlock>
         <InfoBlock>
           {currentType === 'regional' ? (
             <Cost>
-              {Math.round(((val / REG_POP) * 100) / 100)}
-              тыс.руб
+              {`${Math.round(((val / REG_POP) * 100) / 100)} тыс.руб`}
             </Cost>
           ) : (
             <Cost>
-              {Math.round(((val / TOMSK_POP) * 100) / 100)}
-              тыс.руб
+              {`${Math.round(((val / TOMSK_POP) * 100) / 100)} тыс.руб`}
             </Cost>
           )}
           {currentType === 'regional'
