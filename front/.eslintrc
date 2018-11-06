@@ -3,6 +3,8 @@
   "extends": "airbnb",
   "plugins": ["prettier"],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-did-update-set-state": false,
+    "no-underscore-dangle": 0
   }
 }
