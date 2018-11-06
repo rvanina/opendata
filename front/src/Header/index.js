@@ -36,7 +36,7 @@ const Subtitle = styled.h2`
 function Header() {
   return (
     <Wrapper>
-      <div className='container-fluid'>
+      <div className="container-fluid">
         <Title>Бюджет Томска</Title>
         <Subtitle>Открытые данные</Subtitle>
       </div>
