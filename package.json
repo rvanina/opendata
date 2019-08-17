@@ -8,6 +8,7 @@
   "dependencies": {
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "pm2": "^3.5.1",
     "sqlite3": "^4.0.3",
     "sync": "^0.2.5"
   }
